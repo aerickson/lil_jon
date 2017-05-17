@@ -1,0 +1,78 @@
+#!/usr/bin/env python
+
+import os
+import random
+import subprocess
+import string
+import sys
+
+# TODO: turn into a pip?
+# TODO: make number of sounds a command line option
+# TODO: create new git project
+#   TODO: encode sounds to mp3
+
+SOUND_DIR = os.path.join(os.path.expanduser("~"), 'git/lil_jon/m4a')
+SAYING_COUNT = 2
+
+
+#
+# FUNCTIONS
+#
+
+def cmd_exists(cmd):
+    return subprocess.call("type " + cmd, shell=True,
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE) == 0
+
+# TODO: don't repeat files
+def get_files(file_list, **keywords):
+    files = []
+    for x in range(SAYING_COUNT):
+      # TODO: check if already present?
+      files.append(random.choice(file_list))
+    return files
+
+# strips out bad stuff
+def get_sayings(file_list):
+  sayings = []
+  for item in file_list:
+    # strip suffix
+    saying = os.path.splitext(os.path.basename(item))[0]
+    # remove numbers and trailing spaces
+    saying = saying.translate(None, string.digits).rstrip()
+    sayings.append(saying)
+  return sayings
+
+def play_sounds(file_list):
+  for the_file in file_list:
+    full_path = os.path.join(SOUND_DIR, the_file)
+    the_cmd = "afplay \"%s\"" % full_path
+    subprocess.call(the_cmd, shell=True)
+
+def awesome_mode(saying_list):
+  for saying in saying_list:
+    awesome_cmd = "figlet \"%s\" | lolcat -p 1" % (saying)
+    subprocess.call(awesome_cmd, shell=True)
+
+
+#
+# MAIN
+#
+
+if not os.path.exists(SOUND_DIR):
+  print "Please clone the repo in ~/git!"
+  print "  cd ~/git && git clone git@github.com:aerickson/lil_jon.git"
+  sys.exit(1)
+
+if cmd_exists('lolcat') and cmd_exists('figlet'):
+  AWESOME_MODE = True
+
+# pick files
+dir_listing = os.listdir(SOUND_DIR)
+dir_listing = list(set(dir_listing) - set(['.DS_Store']))
+# print dir_listing
+selected_files = get_files(dir_listing)
+sayings = get_sayings(selected_files)
+
+# do stuff
+awesome_mode(sayings)
+play_sounds(selected_files)
