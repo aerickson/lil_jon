@@ -1,7 +1,16 @@
 # Overview
 
+Plays Lil Jon sound clips. If you have figlet and lolcat installed it will pretty-print the clip titles.
+
+I use it to alert me to long-running commands that have finished.
+
+`command; lil_jon`
+
+## Example
+
 ```
 > lil_jon
+(sounds play)
  ____  _   _    _    ____   __   __ _      _____ ___ _   _  ____    _    ____  
 / ___|| \ | |  / \  |  _ \  \ \ / // \    |  ___|_ _| \ | |/ ___|  / \  / ___| 
 \___ \|  \| | / _ \ | |_) |  \ V // _ \   | |_   | ||  \| | |  _  / _ \ \___ \ 
