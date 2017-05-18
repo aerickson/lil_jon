@@ -7,9 +7,7 @@ import string
 import sys
 
 # TODO: turn into a pip?
-# TODO: make number of sounds a command line option
-# TODO: create new git project
-#   TODO: encode sounds to mp3
+# TODO: make number of sounds a command line option (a constant currently)
 
 SOUND_DIR = os.path.join(os.path.expanduser("~"), 'git/lil_jon/m4a')
 SAYING_COUNT = 2
